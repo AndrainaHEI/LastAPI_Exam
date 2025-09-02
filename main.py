@@ -4,4 +4,4 @@ from starlette import responses
 app = FastAPI()
 @app.get("/ping")
 def ping():
-    return {"message": "pong"}
+    return responses.JSONResponse({"message": "pong"})
