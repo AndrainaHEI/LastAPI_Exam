@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: STD23001
+  description: This is a specification of STD23001
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Loca# Stockage en mémoire des caractéristiquesl development server
+paths:
+  /ping:
+    get:
+      summary: Ping endpoint
+      responses:
+        '200':
+          description: Returns pong
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "pong"
+  /cars:
+    post:
+      summary: Create a new car characteristic
+      responses:
+        '201':
+          description: Car characteristic created successfully
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Characteristic'
+    get:
+      summary: Get all cars characteristics
+      responses:
+        '200':
+          description: List of all cars characteristics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Characteristic'
+  /cars/{id}:
+    get:
+      summary: Get car characteristic by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Car characteristic found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Characteristic'
+        '404':
+          description: Car not found
+components:
+  schemas:
+    Characteristic:
+      type: object
+      properties:
+        id:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        max_speed:
+          type: number
+        max_fuel_capacity:
+          type: number
+      required:
+        - id
+        - brand
+        - model
+        - max_speed
+        - max_fuel_capacity
